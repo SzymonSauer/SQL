@@ -1,0 +1,77 @@
+1.
+SELECT * FROM customer;
+
+2.
+SELECT * FROM customer WHERE activebool = true;
+
+3.
+SELECT DISTINCT customer_id FROM payment;
+
+4.
+SELECT * FROM actor ORDER BY last_name DESC;
+
+5.
+SELECT title, release_year FROM film WHERE length = 101 ORDER BY title ASC;
+
+6.
+SELECT * FROM film WHERE rental_rate >= 0 AND rental_rate <=3;
+SELECT * FROM film WHERE rental_rate BETWEEN 0 AND 3;
+
+7.
+SELECT film_id, title, release_year, rental_rate, rental_duration
+	FROM film 
+	WHERE rental_duration > 3
+	ORDER BY rental_duration DESC;
+	
+8.
+SELECT title, description, release_year
+	FROM film 
+	WHERE title LIKE 'T%';
+	
+9.
+SELECT address 
+	FROM address 
+	WHERE city_id = 3;
+	
+10.
+SELECT address
+	FROM address 
+	WHERE phone <> ''
+	ORDER BY district ASC;
+	
+11.
+SELECT * 
+	FROM staff
+	WHERE picture IS NULL;
+	
+12.
+SELECT category_id, name
+	FROM category
+	WHERE name LIKE '_o%';
+	
+13.
+SELECT first_name, last_name
+	FROM customer
+	WHERE 	first_name NOT LIKE 'D%' AND 
+			first_name NOT LIKE 'M%' AND 
+			last_name NOT LIKE '%e';
+	
+14.
+SELECT *
+	FROM payment
+	WHERE 	customer_id IN (147, 114, 128) AND 
+			amount <> 2.99;
+		
+15.
+SELECT *
+	FROM payment
+	WHERE customer_id NOT BETWEEN 200 AND 300;
+	
+16.
+SELECT * FROM payment
+WHERE (amount IN (2.99, 4.99, 5.99) OR (amount BETWEEN 0.1 AND 0.99) )
+AND CAST(payment_date AS DATE) >= '2007-04-01' ORDER BY amount DESC
+
+SELECT * FROM payment
+WHERE (amount IN (2.99, 4.99, 5.99) OR (amount BETWEEN 0.1 AND 0.99) )
+AND payment_date > to_date( '2007.04.01', 'YYYY-MM-DD') ORDER BY amount DESC

@@ -1,0 +1,93 @@
+CREATE TABLE account (
+	user_id int PRIMARY KEY,
+	username varchar(50) UNIQUE NOT NULL,
+	password varchar(50) NOT NULL,
+	email varchar(255) UNIQUE NOT NULL,
+	created_on timestamp,
+	last_login timestamp
+);
+
+CREATE TABLE role (
+	role_id int PRIMARY KEY,
+	role_name varchar(255) NOT NULL
+);
+
+CREATE TABLE account_role (
+	account_role int PRIMARY KEY,
+	user_id int,
+	role_id int,
+	grant_date timestamp,
+	FOREIGN KEY (user_id) REFERENCES account(user_id),
+	FOREIGN KEY (role_id) REFERENCES role(role_id)
+);
+
+ALTER TABLE account_role
+DROP account_role
+
+ALTER TABLE account_role
+ADD account_role_id int PRIMARY KEY;
+
+____________________
+
+CREATE TABLE department (
+	departmentid int PRIMARY KEY,
+	name varchar(255) NOT NULL,
+	budget int,
+	startdate timestamp,
+	administrator varchar(255)
+);
+
+
+CREATE TABLE course (
+	courseid int PRIMARY KEY,
+	title varchar(255) NOT NULL,
+	credits varchar(255),
+	departmentid int,
+	FOREIGN KEY (departmentid) REFERENCES department(departmentid)
+);
+
+CREATE TABLE studentgrade (
+	enrollmentid int PRIMARY KEY,
+	courseid int,
+	studentid int,
+	grade int,
+	FOREIGN KEY (courseid) REFERENCES course(courseid)
+);
+
+CREATE TABLE person (
+	personid int PRIMARY KEY,
+	lastname varchar(255) NOT NULL,
+	firstname varchar(255) NOT NULL,
+	hiredate timestamp,
+	enrollmentdate timestamp
+);
+
+CREATE TABLE officeassignment (
+	instructorid int PRIMARY KEY,
+	location varchar(255) NOT NULL,
+	time_stamp timestamp
+);
+
+CREATE TABLE courseinstructor (
+	courseinstructorid int PRIMARY KEY,
+	courseid int,
+	personid int,
+	FOREIGN KEY (courseid) REFERENCES course(courseid),
+	FOREIGN KEY (personid) REFERENCES person(personid)
+);
+
+CREATE TABLE onlinecourse (
+	onlinecourseid int PRIMARY KEY,
+	courseid int,
+	url varchar(255),
+	FOREIGN KEY (courseid) REFERENCES course(courseid)
+);
+
+CREATE TABLE onsitecourse (
+	onsitecourseid int PRIMARY KEY,
+	courseid int,
+	location varchar(255),
+	dates int,
+	time date,
+	FOREIGN KEY (courseid) REFERENCES course(courseid)
+);

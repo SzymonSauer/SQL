@@ -1,0 +1,99 @@
+ 	1.
+SELECT products.product_id, products.product_name
+	FROM products
+	INNER JOIN order_details
+	ON products.product_id = order_details.product_id
+	WHERE order_details.quantity > 12;
+
+SELECT products.product_id, products.product_name
+	FROM products
+	INNER JOIN order_details
+	ON products.product_id = order_details.product_id
+	WHERE order_details.quantity > 12
+	GROUP BY products.product_id
+
+SELECT products.product_id, products.product_name
+	FROM products
+	WHERE products.product_id IN (
+		SELECT order_details.product_id
+				FROM order_details
+				GROUP BY product_id
+				HAVING SUM(order_details.quantity) > 500 );
+
+2.
+SELECT products.product_id, products.product_name
+	FROM products
+	WHERE supplier_id IN (
+		SELECT supplier_id
+		FROM suppliers
+		WHERE country IN ('USA', 'UK'));
+						  
+SELECT products.product_id, products.product_name, suppliers.country
+	FROM products
+	JOIN suppliers ON suppliers.supplier_id=products.supplier_id
+	WHERE country IN ('USA', 'UK');
+
+
+3.
+
+???
+SELECT products.product_id, products.product_name, products.unit_price
+	FROM products
+	INNER JOIN order_details ON products.product_id = order_details.product_id
+	
+SELECT products.product_id, products.product_name, products.unit_price, products.unit_price * AVG(order_details.discount)
+	FROM products
+	
+	
+	
+	
+	
+	
+		SELECT AVG(order_details.discount) 
+			FROM order_details
+			GROUP BY order_details.product_id
+			HAVING AVG(order_details.discount) <> 0 
+			ORDER BY order_details.product_id
+
+???
+
+SELECT product_id, product_name, unit_price 
+	FROM products
+	WHERE unit_price < ( SELECT AVG(unit_price) FROM products WHERE product_id IN ( SELECT product_id FROM order_details WHERE discount != 0 ))
+
+Produkty nieprzecenione których cena jest mniejsza od œredniej ceny produktów
+
+SELECT PRODUCT_ID, PRODUCT_NAME, UNIT_PRICE FROM PRODUCTS
+	WHERE UNIT_PRICE < ( SELECT AVG(UNIT_PRICE) FROM PRODUCTS) AND PRODUCT_ID IN (SELECT PRODUCT_ID FROM ORDER_DETAILS WHERE DISCOUNT = 0 )
+
+
+4.
+
+select suppliers.supplier_id, suppliers.company_name
+	from suppliers
+	where suppliers.supplier_id IN (SELECT products.supplier_id from products where products.unit_price > 40);
+
+5.
+
+	NAJ£ATWIEJ U¯YÆ LIMIT
+
+6.
+
+SELECT * FROM products
+	ORDER BZ unit?price
+	LIMIT 10;
+
+SELECT suppliers.company_name FROM suppliers WHERE suppliers.supplier_id IN ( SELECT products. supplier_id FROM products WHERE products.product.id IN (SELECT order_details.product_id from order_teils where prder_details.discount = 0 and order_details.order_id in (select irders.order_id from orders where orders.ship_city Like 'Salzburg Or orders.ship_city Like ' Paris))))) )
+
+
+7.
+
+
+SELECT product_name, quantity_per_unit, unit_price
+	FROM 
+	WHERE category_id IN (SELECT category_id
+				FROM categories
+				WHERE category_name LIKE 'Seafood')
+	AND unit_price > (SELECT AVG(unit_price)
+				FROM products WHERE category_id IN (SELECT category_id
+									FROM categories WHERE category_name LIKE 'Confections'))

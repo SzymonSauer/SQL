@@ -1,0 +1,79 @@
+1.
+SELECT MIN(amount) FROM payment;
+
+2.
+SELECT * FROM film  WHERE length = (SELECT MAX(length) FROM FILM);
+
+3.
+SELECT DISTINCT COUNT(city) from city;
+
+
+4.
+SELECT AVG(length) FROM film;
+
+5.
+SELECT SUM(amount) FROM payment;
+
+6.
+SELECT staff_id, SUM(amount)
+	FROM payment
+	GROUP BY staff_id;
+
+
+7.
+SELECT COUNT(payment_id) 
+	FROM payment 
+	WHERE 	payment_date > to_date('2012-04-12', 'YYYY-MM-DD')
+	
+SELECT COUNT(payment_id) 
+	FROM payment 
+	WHERE 	CAST(payment_date AS DATE) > '2012-04-12';
+
+8.
+SELECT COUNT(customer_id)
+	FROM customer
+	WHERE	last_name LIKE 'B%' OR
+			last_name LIKE 'D%';
+
+9.
+
+SELECT * FROM address ORDER BY district;
+
+SELECT district, COUNT(address)
+	FROM address
+	GROUP BY district
+
+
+10.
+SELECT district, COUNT(address)
+	FROM address
+	GROUP BY district
+	HAVING COUNT(address) > 2
+	ORDER BY district ASC;
+	
+11.
+SELECT COUNT(rental_id)
+	FROM rental
+	WHERE return_date > '2005-06-01 00:00:00'
+
+12.
+SELECT rental_rate, AVG(rental_duration)
+	FROM film
+	GROUP BY rental_rate;
+
+13.
+SELECT replacement_cost, AVG(rental_duration)
+	FROM film
+	WHERE rental_rate IN (2.99, 4.99)
+	GROUP BY replacement_cost, rental_duration
+	HAVING 	rental_duration < 5
+			replacement_cost < 20.99
+	ORDER BY AVG(rental_duration) ASC;
+
+14.
+SELECT SUM(amount), customer_id, staff_id
+	FROM payment
+	GROUP BY customer_id, staff_id 
+	HAVING SUM(amount) BETWEEN 50 AND 60 AND
+			SUM(amount) <> 50.87
+	ORDER BY customer_id

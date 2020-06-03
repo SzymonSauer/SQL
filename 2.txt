@@ -1,0 +1,36 @@
+1.a
+ALTER TABLE person
+ADD COLUMN birthdate DATE;
+
+1.b
+ALTER TABLE person
+ADD UNIQUE (firstname, lastname);
+
+1.c
+ALTER TABLE person
+ADD COLUMN age decimal;
+
+1.d
+ALTER TABLE person
+ALTER COLUMN age TYPE int;
+
+1.e
+ALTER TABLE person
+ALTER enrollmentdate SET DEFAULT NOW();
+
+2.
+DROP TABLE officeassignment;
+
+3.a
+ALTER TABLE studentgrade
+ADD CHECK (grade>=2 AND grade<=5);
+
+ALTER TABLE studentgrade
+ADD CHECK (grade BETWEEN 2 AND 5);
+
+3.b
+ALTER TABLE studentgrade
+ALTER COLUMN grade SET DEFAULT 0;
+
+ALTER TABLE department
+DROP COLUMN administrator;
